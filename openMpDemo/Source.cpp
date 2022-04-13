@@ -15,25 +15,37 @@ int main() {
 	
 	init_arr();
 
-	//cout << part_sum(0, arr_size, 1) << endl;
+	omp_set_nested(1);
+	double t1 = omp_get_wtime();
 #pragma omp parallel sections
 	{
 #pragma omp section
 		{
-			cout << "min = " << part_min(0, arr_size, 4) << endl;
+			cout << "min 1 = " << part_min(0, arr_size, 1) << endl;
+			cout << "min 2 = " << part_min(0, arr_size, 2) << endl;
+			cout << "min 3 = " << part_min(0, arr_size, 3) << endl;
+			cout << "min 4 = " << part_min(0, arr_size, 4) << endl;
+			cout << "min 8 = " << part_min(0, arr_size, 8) << endl;
+			cout << "min 10 = " << part_min(0, arr_size, 10) << endl;
+			cout << "min 16 = " << part_min(0, arr_size, 16) << endl;
+			cout << "min 32 = " << part_min(0, arr_size, 32) << endl;
 		}
-		//cout << part_sum(0, arr_size, 2) << endl;
-		//cout << part_sum(0, arr_size, 3) << endl;
+		
 #pragma omp section
 		{
-			cout << "sum = " << part_sum(0, arr_size, 4) << endl;
+			cout << "sum 1 = " << part_sum(0, arr_size, 1) << endl;
+			cout << "sum 2 = " << part_sum(0, arr_size, 2) << endl;
+			cout << "sum 3 = " << part_sum(0, arr_size, 3) << endl;
+			cout << "sum 4 = " << part_sum(0, arr_size, 4) << endl;
+			cout << "sum 8 = " << part_sum(0, arr_size, 8) << endl;
+			cout << "sum 10 = " << part_sum(0, arr_size, 10) << endl;
+			cout << "sum 16 = " << part_sum(0, arr_size, 16) << endl;
+			cout << "sum 32 = " << part_sum(0, arr_size, 32) << endl;
 		}
 	}
-	//cout << part_sum(0, arr_size, 8) << endl;
-	//cout << part_sum(0, arr_size, 10) << endl;
-	//cout << part_sum(0, arr_size, 16) << endl;
-	//cout << part_sum(0, arr_size, 32) << endl;
-
+	double t2 = omp_get_wtime();
+	
+	cout << "Total time - " << t2 - t1 << " seconds" << endl;
 	return 0;
 }
 
@@ -56,7 +68,7 @@ long long part_sum(int start_index, int finish_index, int num_threads) {
 
 	double t2 = omp_get_wtime();
 
-	cout << num_threads << " threads worked - " << t2 - t1 << " seconds" <<  endl;
+	cout << "sum " << num_threads << " threads worked - " << t2 - t1 << " seconds" <<  endl;
 
 	return sum;
 }
@@ -78,10 +90,9 @@ long long part_min(int start_index, int finish_index, int num_threads) {
 		}
 	}
 
-
 	double t2 = omp_get_wtime();
 
-	cout << num_threads << " threads worked - " << t2 - t1 << " seconds, min = " << endl;
+	cout << "min " << num_threads << " threads worked - " << t2 - t1 << " seconds" << endl;
 
 	return min;
 }
